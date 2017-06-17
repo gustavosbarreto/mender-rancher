@@ -1,0 +1,9 @@
+name: Mender
+description: |
+  Mender Backend
+version: v1.0.1
+category: IoT
+maintainer: Luis Gustavo S. Barreto <gustavosbarreto@gmail.com>
+projectURL: http://github.com/gustavosbarreto/mender-rancher
+labels:
+  io.rancher.orchestration.supported: 'cattle,swarm'
