@@ -1,0 +1,58 @@
+version: '2'
+volumes:
+  mongo-device-auth:
+    external: true
+    driver: rexray-dobs
+  mongo-device-adm:
+    external: true
+    driver: rexray-dobs
+  mongo-deployments:
+    external: true
+    driver: rexray-dobs
+  mongo-useradm:
+    external: true
+    driver: rexray-dobs
+  mongo-inventory:
+    external: true
+    driver: rexray-dobs
+services:
+  mongo-device-auth:
+    image: mongo:3.4
+    stdin_open: true
+    volumes:
+    - mongo-device-auth:/data/db
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  mongo-device-adm:
+    image: mongo:3.4
+    stdin_open: true
+    volumes:
+    - mongo-device-adm:/data/db
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  mongo-deployments:
+    image: mongo:3.4
+    stdin_open: true
+    volumes:
+    - mongo-deployments:/data/db
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  mongo-useradm:
+    image: mongo:3.4
+    stdin_open: true
+    volumes:
+    - mongo-useradm:/data/db
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  mongo-inventory:
+    image: mongo:3.4
+    stdin_open: true
+    volumes:
+    - mongo-inventory:/data/db
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
