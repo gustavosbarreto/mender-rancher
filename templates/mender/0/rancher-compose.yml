@@ -1,0 +1,5 @@
+.catalog:
+  name: "Mender"
+  version: "v1.0.1"
+  description: |
+    Mender Backend
