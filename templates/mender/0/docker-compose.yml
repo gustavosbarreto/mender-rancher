@@ -138,6 +138,7 @@ services:
     labels:
       io.rancher.container.agent.role: environmentAdmin
       io.rancher.container.create_agent: 'true'
+      io.rancher.scheduler.global: true
   api-gateway:
     image: gustavosbarreto/mender-api-gateway
     stdin_open: true
@@ -151,6 +152,7 @@ services:
     - device-adm:mender-device-adm
     labels:
       io.rancher.container.pull_image: always
+      io.rancher.scheduler.global: true
   device-auth-secrets:
     image: gustavosbarreto/mender-secrets-provider
     environment:
