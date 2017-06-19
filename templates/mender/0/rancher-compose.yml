@@ -3,3 +3,50 @@
   version: "v1.0.1"
   description: |
     Mender Backend
+  questions:
+    - variable: USERADM_SERVER_PRIV_KEY_SECRET
+      type: string
+      required: true
+      label: "User Administration Key"
+    - variable: DEVICEAUTH_SERVER_PRIV_KEY_SECRET
+      type: string
+      required: true
+      label: "Device Authentication Key"
+    - variable: DEPLOYMENTS_S3_ACCESS_KEY
+      type: string
+      required: true
+      label: "Deployment Service: S3 Access Key"
+    - variable: DEPLOYMENTS_S3_SECRET_KEY
+      type: string
+      required: true
+      label: "Deployment Service: S3 Secret Key"
+    - variable: DEPLOYMENTS_S3_BUCKET_KEY
+      type: string
+      required: true
+      label: "Deployment Service: S3 Bucket"
+      description: S3 bucket where the uploaded images will be stored and served from
+    - variable: DEPLOYMENTS_S3_URI
+      type: string
+      required: true
+      default: "https://s3.amazonaws.com"
+      label: "Deployment Service: S3 URI"
+      description: "Do not modify this unless you want to use your own Minio server"
+    - variable: BACKUP_S3_ACCESS_KEY
+      type: string
+      required: true
+      label: "Backup Agent: S3 Access Key"
+    - variable: BACKUP_S3_SECRET_KEY
+      type: string
+      required: true
+      label: "Backup Agent: S3 Secret Key"
+    - variable: BACKUP_S3_BUCKET_KEY
+      type: string
+      required: true
+      label: "Backup Agent: S3 Bucket"
+      description: S3 bucket where the uploaded images will be stored and served from
+    - variable: BACKUP_S3_URI
+      type: string
+      required: true
+      default: "https://s3.amazonaws.com"
+      label: "Backup Agent: S3 URI"
+      description: "Do not modify this unless you want to use your own Minio server"    
