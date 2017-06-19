@@ -1,0 +1,7 @@
+name: REX-Ray DigitalOcean Driver
+description: |
+  Docker volume plugin for DigitalOcean
+version: v0.9.0
+category: Storage
+labels:
+  io.rancher.orchestration.supported: 'cattle'
