@@ -5,11 +5,11 @@
     Mender Backend
   questions:
     - variable: USERADM_SERVER_PRIV_KEY_SECRET
-      type: string
+      type: multiline
       required: true
       label: "User Administration Key"
     - variable: DEVICEAUTH_SERVER_PRIV_KEY_SECRET
-      type: string
+      type: multiline
       required: true
       label: "Device Authentication Key"
     - variable: DEPLOYMENTS_S3_ACCESS_KEY
