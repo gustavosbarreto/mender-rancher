@@ -1,0 +1,23 @@
+rexray:
+  modules:
+    default-docker:
+      disabled: true
+libstorage:
+  host: tcp://127.0.0.1:7979
+  embedded: true
+  client:
+    type: controller
+  server:
+    endpoints:
+      public:
+        address: tcp://:7979
+        tls: false
+    services:
+      _REXRAY_PROVIDER_:
+        driver: _REXRAY_PROVIDER_
+  integration:
+    volume:
+      operations:
+        create:
+          _REXRAY_PROVIDER_:
+            size: 1

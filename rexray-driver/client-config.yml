@@ -1,0 +1,25 @@
+rexray:
+  logLevel: warn
+  modules:
+    default-docker:
+      type: docker
+      host: unix:///var/run/docker/plugins/rexray-_REXRAY_PROVIDER_.sock
+      libstorage:
+        service: _REXRAY_PROVIDER_
+        integration:
+          volume:
+            operations:
+              create:
+                default:
+                  size: _REXRAY_DEFAULT_VOLUME_SIZE_
+libstorage:
+  embedded: false
+  host: tcp://_REXRAY_IPADDRESS_:7979
+  service: _REXRAY_PROVIDER_
+  client:
+    tls: false
+  integration:
+    volume:
+      operations:
+        mount:
+          path: /var/lib/rancher/volumes
