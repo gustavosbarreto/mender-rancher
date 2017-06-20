@@ -10,6 +10,9 @@ rexray:
             operations:
               mount:
                 path: /var/lib/rancher/volumes
+                preempt: true
+              unmount:
+                ignoreUsedCount: true
               create:
                 default:
                   size: {{.Env.REXRAY_DEFAULT_VOLUME_SIZE}}

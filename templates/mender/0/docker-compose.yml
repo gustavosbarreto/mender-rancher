@@ -1,20 +1,4 @@
 version: '2'
-volumes:
-  mongo-device-auth:
-    external: true
-    driver: rexray-dobs
-  mongo-device-adm:
-    external: true
-    driver: rexray-dobs
-  mongo-deployments:
-    external: true
-    driver: rexray-dobs
-  mongo-useradm:
-    external: true
-    driver: rexray-dobs
-  mongo-inventory:
-    external: true
-    driver: rexray-dobs
 services:
   useradm-secrets:
     image: gustavosbarreto/mender-secrets-provider
@@ -60,17 +44,19 @@ services:
   mongo-device-auth:
     image: mongo:3.4
     stdin_open: true
+    volume_driver: rexray-dobs
     volumes:
-    - mongo-device-auth:/data/db
+    - deviceauth:/data/db
     tty: true
     labels:
       io.rancher.container.pull_image: always
   mongo-deployments:
     image: mongo:3.4
     stdin_open: true
-    volumes:
-    - mongo-deployments:/data/db
     tty: true
+    volume_driver: rexray-dobs
+    volumes:
+    - deployments:/data/db
     labels:
       io.rancher.container.pull_image: always
   inventory:
@@ -125,8 +111,9 @@ services:
   mongo-device-adm:
     image: mongo:3.4
     stdin_open: true
+    volume_driver: rexray-dobs
     volumes:
-    - mongo-device-adm:/data/db
+    - deviceadm:/data/db
     tty: true
     labels:
       io.rancher.container.pull_image: always
@@ -175,16 +162,18 @@ services:
   mongo-useradm:
     image: mongo:3.4
     stdin_open: true
+    volume_driver: rexray-dobs
     volumes:
-    - mongo-useradm:/data/db
+    - useradm:/data/db
     tty: true
     labels:
       io.rancher.container.pull_image: always
   mongo-inventory:
     image: mongo:3.4
     stdin_open: true
+    volume_driver: rexray-dobs
     volumes:
-    - mongo-inventory:/data/db
+    - inventory:/data/db
     tty: true
     labels:
       io.rancher.container.pull_image: always

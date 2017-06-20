@@ -1,19 +1,23 @@
-rexray-driver:
-  image: gustavosbarreto/mender-rexray-driver
-  privileged: true
-  stdin_open: true
-  tty: true
-  volumes:
-    - /dev:/host/dev
-    - /var/run/docker:/var/run/docker
-    - /var/run/docker.sock:/var/run/docker.sock
-    - /var/lib/docker:/var/lib/docker
-    - /var/lib/rancher/volumes:/var/lib/rancher/volumes:shared
-  environment:
-    REXRAY_PROVIDER: 'dobs'
-    DOBS_TOKEN: '${DOBS_TOKEN}'
-    DOBS_REGION: '${DOBS_REGION}'
-    REXRAY_DEFAULT_VOLUME_SIZE: '${REXRAY_DEFAULT_VOLUME_SIZE}'
-  labels:
-    io.rancher.container.pull_image: always
-    io.rancher.scheduler.global: true
+version: '2'
+
+services:
+  rexray-driver:
+    image: gustavosbarreto/mender-rexray-driver
+    privileged: true
+    network_mode: host
+    stdin_open: true
+    tty: true
+    volumes:
+      - /dev:/host/dev
+      - /var/run/docker:/var/run/docker
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker:/var/lib/docker
+      - /var/lib/rancher/volumes:/var/lib/rancher/volumes:shared
+    environment:
+      REXRAY_PROVIDER: 'dobs'
+      DOBS_TOKEN: '${DOBS_TOKEN}'
+      DOBS_REGION: '${DOBS_REGION}'
+      REXRAY_DEFAULT_VOLUME_SIZE: '${REXRAY_DEFAULT_VOLUME_SIZE}'
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.global: true
