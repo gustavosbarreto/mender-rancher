@@ -43,7 +43,7 @@
       type: string
       required: true
       label: "Backup Agent: S3 Secret Key"
-    - variable: BACKUP_S3_BUCKET_KEY
+    - variable: BACKUP_S3_BUCKET
       type: string
       required: true
       label: "Backup Agent: S3 Bucket"
