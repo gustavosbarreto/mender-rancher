@@ -1,8 +1,8 @@
-name: Mender
+name: Mender 
 description: |
-  Mender Backend
+  Over-the-air software updates for embedded Linux devices
 version: v1.0.1
-category: IoT
+category: OTA
 maintainer: Luis Gustavo S. Barreto <gustavosbarreto@gmail.com>
 projectURL: http://github.com/gustavosbarreto/mender-rancher
 labels:
