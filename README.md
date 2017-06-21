@@ -2,6 +2,8 @@
 
 Rancher template for Mender platform
 
+![Mender platform graph](http://i.imgur.com/YzkJHrW.png)
+
 ## Install
 
 In Rancher's UI, go to **Admin/Settings** and add a new custom catalog:
@@ -10,9 +12,27 @@ In Rancher's UI, go to **Admin/Settings** and add a new custom catalog:
 | ------ | ----------------------------------------------------- | ------ |
 | Mender | https://github.com/gustavosbarreto/mender-rancher.git | master |
 
-### Optional Dependencies
+## Templates
 
-**strongly recommended for production**
+* **mender**: Mender Server for production environment
+* **rexray-dobs-driver**: Docker volume plugin for DigitalOcean Block Storage
 
-If you want to persist Mender's database data, you need to setup a REX-Ray
-volume plugin for Docker.
+## Docker Images
+
+* **api-gateway**:
+Docker image based on Mender API Gateway without HTTPS support. We don't need SSL
+on API Gateway because it is enabled on Rancher Load Balancer.
+
+* **backup-metadata**:
+Docker image used as sidekick container of Mender Backup Agent to provide
+configuration for backup plans.
+
+* **secrets-provider**:
+Docker image used as sidekick container of Mender's Device Authentication and
+Mender's User Administration services to provide the private keys as file.
+
+* **rexray-driver**:
+Docker image that runs on each host to provide a docker volume DigitalOcean
+Block Storage.
+
+
