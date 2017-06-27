@@ -27,7 +27,6 @@ libstorage:
     endpoints:
       public:
         address: tcp://:7979
-        tls: false
     services:
       {{.Env.REXRAY_PROVIDER}}:
         driver: {{.Env.REXRAY_PROVIDER}}
@@ -35,8 +34,6 @@ libstorage:
   host: tcp://rexray:7979
   embedded: false
   service: {{.Env.REXRAY_PROVIDER}}
-  client:
-    tls: false
   integration:
     volume:
       operations:
