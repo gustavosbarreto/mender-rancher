@@ -2,8 +2,8 @@ FROM alpine:3.6
 
 VOLUME /config
 
-# Every day at 10PM
-ENV BACKUP_CRONTAB_LINE "0 22 * * *"
+# Every day at 00:00h
+ENV BACKUP_TIME "0 0 * * *"
 # Number of backups to keep locally
 ENV BACKUP_RETENTION 1
 # Backup operation timeout in minutes

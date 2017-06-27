@@ -1,5 +1,5 @@
 scheduler:
-  cron: "{{.Env.BACKUP_CRONTAB_LINE}}"
+  cron: "{{.Env.BACKUP_TIME}}"
   retention: {{.Env.BACKUP_RETENTION}}
   timeout: {{.Env.BACKUP_TIMEOUT}}
 target:
