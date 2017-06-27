@@ -1,0 +1,32 @@
+version: '2'
+services:
+  backup-agent:
+    image: stefanprodan/mgob:0.4
+    stdin_open: true
+    tty: true
+    external_links:
+    - ${MENDER_STACK_NAME}/mongo-inventory:mongo-inventory
+    - ${MENDER_STACK_NAME}/mongo-useradm:mongo-useradm
+    - ${MENDER_STACK_NAME}/mongo-device-adm:mongo-device-adm
+    - ${MENDER_STACK_NAME}/mongo-deployments:mongo-deployments
+    - ${MENDER_STACK_NAME}/mongo-device-auth:mongo-device-auth
+    volumes_from:
+    - backup-metadata
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.sidekicks: backup-metadata
+  backup-metadata:
+    image: gustavosbarreto/mender-backup-metadata
+    environment:
+      BACKUP_TIME: '${BACKUP_TIME}'
+      BACKUP_S3_ACCESS_KEY: '${BACKUP_S3_ACCESS_KEY}'
+      BACKUP_S3_SECRET_KEY: '${BACKUP_S3_SECRET_KEY}'
+      BACKUP_S3_BUCKET: '${BACKUP_S3_BUCKET}'
+      BACKUP_S3_URI: '${BACKUP_S3_URI}'
+    stdin_open: true
+    volumes:
+    - /config
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.start_once: 'true'

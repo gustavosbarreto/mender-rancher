@@ -1,0 +1,9 @@
+name: Mender Backup Agent
+description: |
+  Backup Agent for Mender Server Stack
+version: v0.1.0
+category: Backup
+maintainer: Luis Gustavo S. Barreto <gustavosbarreto@gmail.com>
+projectURL: http://github.com/gustavosbarreto/mender-rancher
+labels:
+  io.rancher.orchestration.supported: 'cattle,swarm'

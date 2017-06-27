@@ -1,0 +1,37 @@
+.catalog:
+  name: "Mender Backup Agent"
+  version: "v0.1.0"
+  description: |
+    Mender Backup Agent
+  questions:
+    - variable: MENDER_STACK_NAME
+      type: string
+      required: true
+      default: "mender"
+      label: "Mender Server Stack Name"
+      description: "Do not change if you don't know what you are doing"
+    - variable: BACKUP_TIME
+      type: string
+      required: true
+      default: "0 0 * * *"
+      label: "Backup Time"
+      description: "The default value is once a day at 00:00h. Use crontab syntax to change backup time."
+    - variable: BACKUP_S3_ACCESS_KEY
+      type: string
+      required: true
+      label: "S3 Access Key"
+    - variable: BACKUP_S3_SECRET_KEY
+      type: string
+      required: true
+      label: "S3 Secret Key"
+    - variable: BACKUP_S3_BUCKET
+      type: string
+      required: true
+      label: "S3 Bucket"
+      description: S3 bucket where the uploaded images will be stored and served from
+    - variable: BACKUP_S3_URI
+      type: string
+      required: true
+      default: "https://s3.amazonaws.com"
+      label: "Backup Agent: S3 URI"
+      description: "Do not modify this unless you want to use your own Minio server"    
