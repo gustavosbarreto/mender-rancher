@@ -10,6 +10,15 @@
       default: 1
       label: Scale
       description: Scale Mender services to multiple instances
+    - variable: MENDER_VOLUME_DRIVER
+      type: enum
+      required: true
+      default: rexray-dobs
+      options:
+      - local
+      - rexray-dobs
+      label: Database volume driver
+      description: Volume driver of databases used by Mender services
     - variable: MENDER_API_GATEWAY_CERT
       type: certificate
       required: true

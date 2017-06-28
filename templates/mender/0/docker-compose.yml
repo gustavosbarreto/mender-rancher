@@ -29,7 +29,7 @@ services:
   mongo-device-auth:
     image: mongo:3.4
     stdin_open: true
-    volume_driver: rexray-dobs
+    volume_driver: '${MENDER_VOLUME_DRIVER}'
     volumes:
     - deviceauth:/data/db
     tty: true
@@ -39,7 +39,7 @@ services:
     image: mongo:3.4
     stdin_open: true
     tty: true
-    volume_driver: rexray-dobs
+    volume_driver: '${MENDER_VOLUME_DRIVER}'
     volumes:
     - deployments:/data/db
     labels:
@@ -76,7 +76,7 @@ services:
   mongo-device-adm:
     image: mongo:3.4
     stdin_open: true
-    volume_driver: rexray-dobs
+    volume_driver: '${MENDER_VOLUME_DRIVER}'
     volumes:
     - deviceadm:/data/db
     tty: true
@@ -127,7 +127,7 @@ services:
   mongo-useradm:
     image: mongo:3.4
     stdin_open: true
-    volume_driver: rexray-dobs
+    volume_driver: '${MENDER_VOLUME_DRIVER}'
     volumes:
     - useradm:/data/db
     tty: true
@@ -136,7 +136,7 @@ services:
   mongo-inventory:
     image: mongo:3.4
     stdin_open: true
-    volume_driver: rexray-dobs
+    volume_driver: '${MENDER_VOLUME_DRIVER}'
     volumes:
     - inventory:/data/db
     tty: true
