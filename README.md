@@ -15,7 +15,7 @@ In Rancher's UI, go to **Admin/Settings** and add a new custom catalog:
 ## Templates
 
 * **mender**: Mender Server for production environment
-* **rexray-dobs-driver**: Docker volume plugin for DigitalOcean Block Storage
+* **rexray-dobs**: Docker volume plugin for DigitalOcean Block Storage
 * **mender-backup**: Backup Agent for Mender Server Stack
 
 ## Docker Images

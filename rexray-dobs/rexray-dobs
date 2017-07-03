@@ -1,0 +1,146 @@
+#!/bin/bash
+
+if [ -e "$(dirname $0)/common.sh" ]; then
+    source $(dirname $0)/common.sh
+elif [ -e "$(dirname $0)/../common/common.sh" ]; then
+    source $(dirname $0)/../common/common.sh
+fi
+
+DO_REGION=`curl -s http://169.254.169.254/metadata/v1/region 2>/dev/null`
+DROPLET_ID=`curl -s http://169.254.169.254/metadata/v1/id 2>/dev/null`
+
+init()
+{
+    print_success
+}
+
+create() {
+    if [ -z "${OPTS[name]}" ]; then
+        print_error "name is required"
+    fi
+
+    VOLUME_NAME=${OPTS[name]}
+    VOLUME_SIZE=${OPTS[size]}
+
+    if [ -z "$VOLUME_SIZE" ]; then
+        VOLUME_SIZE=$DEFAULT_VOLUME_SIZE
+    fi
+
+    VOLUME_ID=`rexray volume get --format jsonp $VOLUME_NAME | jq -r '.[].id' 2> /dev/null`
+
+    if [ -z "$VOLUME_ID" ]; then
+        volume=`rexray volume create \
+                   --format jsonp \
+                   --size $VOLUME_SIZE \
+                   --availabilityZone $DO_REGION \
+                   $VOLUME_NAME`
+
+        if [ $? -ne 0 ]; then
+            print_error $volume
+        fi
+
+        VOLUME_ID=`echo $volume | jq -r '.[].id'`
+    fi
+
+    print_options created true volumeID ${VOLUME_ID} region ${DO_REGION}
+}
+
+attach() {
+    if [ -z "${OPTS[volumeID]}" ]; then
+        print_error "volumeID is required"
+    fi
+
+    VOLUME_NAME=${OPTS[name]}
+    VOLUME_ID=${OPTS[volumeID]}
+
+    volume=`rexray volume get --format jsonp $VOLUME_ID`
+    region=`echo $volume | jq -r '.[].availabilityZone'`
+
+    if [ "$DO_REGION" != "$region" ]; then
+        print_error
+    fi
+
+    while true; do
+        volume=`rexray volume get --format jsonp --path $VOLUME_ID`
+        device=`echo $volume | jq -r '.[].attachments[].deviceName // empty'`
+
+        if [ -z "$device" ]; then
+            error=`rexray volume attach --format jsonp $VOLUME_ID`
+
+            if [ $? -ne 0 ]; then
+                print_error $error
+            fi
+        else
+            break
+        fi
+    done
+
+    print_device ${device}
+}
+
+detach() {
+    VOLUME_ID=`rexray volume ls --format jsonp --path --attached  | jq -r ".[].attachments | select(.[].deviceName==\"${DEVICE}\") | .[].volumeID"`
+
+    if [ -n "$VOLUME_ID" ]; then
+        rexray volume detach $VOLUME_ID > /dev/null 2>&1
+    fi
+
+    print_success
+}
+
+mountdest() {
+    if [ -d "$DEVICE" ]; then
+        error=`mount --bind $DEVICE $MNT_DEST 2>&1`
+        if [ $? -ne 0 ]; then
+            print_error $error
+        fi
+    else
+        VOLFSTYPE=$(blkid -o udev "${DEVICE}" 2>/dev/null | grep "ID_FS_TYPE"| cut -d"=" -f2)
+        if [ "${VOLFSTYPE}" = "" ]; then
+            rexray device format --fsType ext4 --deviceName $DEVICE
+        fi
+
+        error=`mount $DEVICE $MNT_DEST 2>&1`
+        if [ $? -ne 0 ]; then
+            print_error $error
+        fi
+    fi
+
+    print_success
+}
+
+unmount() {
+    result=`umount $MNT_DEST 2>&1`
+    if [ $? -ne 0 ]; then
+        if [ "$(echo $result | grep 'not mounted')" ]; then
+            print_success not mounted
+            exit 0
+        elif [ "$(echo $result | grep 'mountpoint not found')" ]; then
+            print_success not found
+            exit 0
+        else
+            print_error $result
+        fi
+    fi
+    print_success unmounted
+}
+
+delete() {
+    if [ -z "${OPTS[created]}" ]; then
+        print_success
+        exit 0
+    fi
+
+    if [ -z "${OPTS[volumeID]}" ]; then
+        print_error "volumeID is required"
+    fi
+
+    VOLUME_ID=${OPTS[volumeID]}
+
+    rexray volume rm $VOLUME_ID > /dev/null 2>&1
+
+    print_success
+}
+
+# Every script must call main as such
+main "$@"

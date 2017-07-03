@@ -1,23 +1,24 @@
 version: '2'
 
 services:
-  rexray-driver:
-    image: gustavosbarreto/mender-rexray-driver
+  rexray-dobs-driver:
+    image: gustavosbarreto/mender-rexray-dobs-driver
     privileged: true
     network_mode: host
     stdin_open: true
     tty: true
     volumes:
+      - /run:/run
+      - /var/run:/var/run
       - /dev:/host/dev
-      - /var/run/docker:/var/run/docker
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /var/lib/docker:/var/lib/docker
       - /var/lib/rancher/volumes:/var/lib/rancher/volumes:shared
     environment:
-      REXRAY_PROVIDER: 'dobs'
+      LIBSTORAGE_SERVICE: 'dobs'
       DOBS_TOKEN: '${DOBS_TOKEN}'
-      DOBS_REGION: '${DOBS_REGION}'
-      REXRAY_DEFAULT_VOLUME_SIZE: '${REXRAY_DEFAULT_VOLUME_SIZE}'
+      DEFAULT_VOLUME_SIZE: '${DEFAULT_VOLUME_SIZE}'
+      RANCHER_DEBUG: '${RANCHER_DEBUG}'
     labels:
       io.rancher.container.pull_image: always
       io.rancher.scheduler.global: true
+      io.rancher.container.create_agent: 'true'
+      io.rancher.container.agent.role: environment

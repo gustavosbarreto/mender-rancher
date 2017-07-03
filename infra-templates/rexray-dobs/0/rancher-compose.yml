@@ -9,25 +9,23 @@
       required: true
       label: DigitalOcean Token
       description: DigitalOcean access token
-    - variable: DOBS_REGION
-      type: enum
-      required: true
-      label: DigitalOcean Region
-      description: DigitalOcean region where volumes should be created
-      default: nyc1
-      options:
-      - nyc1
-      - sfo2
-      - fra1
-      - sgp1
-    - variable: REXRAY_DEFAULT_VOLUME_SIZE
+    - variable: DEFAULT_VOLUME_SIZE
       type: int
       required: true
       default: 1
       label: DigitalOcean default volume size
       description: Size in GB to create volumes in DigitalOcean
+    - variable: RANCHER_DEBUG
+      type: enum
+      required: true
+      default: false
+      options:
+      - true
+      - false
+      label: Debug Mode
+      description: Enable or disable verbose logging
 
-rexray-driver:
+rexray-dobs-driver:
   storage_driver:
     name: rexray-dobs
     scope: environment
