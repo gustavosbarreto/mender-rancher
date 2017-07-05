@@ -54,6 +54,8 @@ services:
       io.rancher.container.pull_image: always
   device-adm:
     image: mendersoftware/deviceadm:1.0.0
+    environment:
+      DEVICEADM_DEVAUTHURL: http://device-auth:8080
     stdin_open: true
     tty: true
     links:
@@ -67,6 +69,7 @@ services:
       DEPLOYMENTS_AWS_AUTH_SECRET: '${DEPLOYMENTS_S3_SECRET_KEY}'
       DEPLOYMENTS_AWS_BUCKET: '${DEPLOYMENTS_S3_BUCKET_KEY}'
       DEPLOYMENTS_AWS_URI: '${DEPLOYMENTS_S3_URI}'
+      DEPLOYMENTS_MENDER_GATEWAY: http://inventory:8080
     stdin_open: true
     tty: true
     links:
@@ -146,6 +149,8 @@ services:
     image: mendersoftware/deviceauth:1.0.0
     environment:
       DEVICEAUTH_SERVER_PRIV_KEY_PATH: /run/secrets/DEVICEAUTH_SERVER_PRIV_KEY
+      DEVICEAUTH_DEVADM_ADDR: http://device-adm:8080
+      DEVICEAUTH_INVENTORY_ADDR: http://inventory:8080
     stdin_open: true
     tty: true
     links:
